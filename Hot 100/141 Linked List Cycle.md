@@ -1,10 +1,10 @@
-141. Linked List Cycle
-Given head, the head of a linked list, determine if the linked list has a cycle in it.
-
+> Given head, the head of a linked list, determine if the linked list has a cycle in it.
 There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
-
 Return true if there is a cycle in the linked list. Otherwise, return false.
 
+# Reflection
+双指针是降低复杂度非常好用的办法， 如何设计双指针相遇是构造的难点
+这道题同时从头部出发，速度不同，题目不难，想法可以借鉴。
 # Hash Table Implementation - Trivial
 
 # Fast / Slow Pointer - Interesting
@@ -32,8 +32,8 @@ public:
 ```
 
 # Get the starting point of the circle - More than interesting!
-Where you stopped for the first thought:
-say, steps before loop: a, loop length: b
+Where you stopped for the first time:
+assume that: steps before loop: a, loop length: b
 x_slow = x, x_fast = 2x, so x = b (every time the distance is getting one position closer/further, so first time they meet, it must be an exact circle)
 c = a - x
 
