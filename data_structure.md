@@ -1,66 +1,133 @@
-# 反思
-对基础数据结构的调用不熟练
-map, unordered_map, map, vector, heap, queue, stack
-循环，不同数据结构之间的转化
+# Basic Data Structure
 
-平时写代码的时候只总结算法，没有数据结构的调用
-太过于抽象
-刷题的时候调用都直接上网搜调用，习惯太差
-
-# 数据结构的基础调用
-multiset<int> window(nums.begin(), nums.begin() + k); # 抽取前k个元素
-
-## map / unordered_map
+## Array
 ```c++
-map[key] = value
-map.insert(make_pair<int, string>(222, "Songhao"))
-map.find(key_value) //unordered_set.find
-map.erase(key)      //unordered_set.remove, or erase iterator
-for (iter = map.begin(); iter != map.end(); ++iter){iter -> first;}
-// update
-map[key]++; //useful to count! 如果key不存在，第一次call这行会直接变成1，真的很方便
+//initialization
+int myints[] = {1,2,3};
+int myints[3] = {1,2,3};
+int myints[10][10];
 
-// convert and sort
-vector<pair<int,int>> vec(map.begin(), map.end())
-sort(vec.begin(), vec.end())
+array<int,3> = {1,2,3};//这样是调用了class，才可以访问成员函数
+//operation
+arr.swap(arr1) //linear time in size
+arr.empty()
+arr.size();arr.max_size()
 ```
 
-## vector
-vector(int num, value) !!!!!!!!!!!!!!!!!!!初始化dp的时候很舒服
+## Vector
+```c++
+// initialization
+vector(int num, value)；
+vector<vector<bool>> mark (Nrow, vector<bool>(Ncol, false));
 int myints[] ={1,2,3}; vector<int>v(myints, myints+3);
-int myints[10][10]
+vector<pair<int,int>> vec(map.begin(), map.end())
 
-vec.push_back(), vec.pop_back()
-vec.size(), vec.clear()
-```c++
-auto it = vec.begin();
-while (it!=vec.end){cout << *it << endl;it++;}
+// operation
+vec.push_back(); vec.pop_back();
+vec.size(); vec.capacity();vec.clear()
+iterator insert (iterator pos, const value_type& val); //insert before
+void insert (pos,n,val)
 ```
-## heap
-heap建立在基础数据结构之上
-make_heap(v.begin(), v.end(), less<int>());//这样在前面的是最大的
-在底层容器添加数据，然后push_heap, 和make_heap参数一样
-pop_heap()把堆顶的放到尾，然后vec.back();vec.pop_back()
 
-make_heap再sort_heap可以实现排序
+## Map
+```c++
+// initialization
+map<key_type,value_type> mymap;
+//operation
+map::iterator it = map.find(key_value); if(it!=map.end()) cout<<it->second<<endl;
+map.erase(key) // or erase iterator
+map[key] = value
+map[key]++;    //useful to count! 如果key不存在，第一次call key对应的value会直接变成1
+map.insert(make_pair<int, string>(222, "Songhao"))
+map.count(key_value) //will only return 0 or 1
 
-## array
-int myints[] ={1,2,3};
-vector<int> vec(myints, myints+3);
+//iteration
+for (iter = map.begin(); iter != map.end(); ++iter){iter -> first;}
+```
+## Set
+set, unordered_set, multiset
+```c++
+//initialization
+std::unordered_multiset<st::string> first;
+//operation
+set.count(key);
+set.insert(arr.begin(),arr.end())
+set.erase(iter);set.erase(key)
+set.find(key) == set.end()
 
-## Multiset
-multiple elements can have equivalent values; store elements in a specific order
-lc480
-insert, erase
+for (int x: myset) std::cout << " " << x; 
+for (const int& x: myset) std::cout << " " << x; 
+```
+## Dequeue
+```c++
+std::deque<int> dq (num,val);
 
-# Queue
+dq.front();dq.back();
+dq.pop_back();dq.push_back();dq.push_front();dq.pop_front();
+```
+## List
+```c++
+list.pop_back();list.push_back();list.push_front();list.pop_front(); 
+iterator insert (iterator position, const value_type& val);
+void insert (iterator position, InputIterator first, InputIterator last);
+
+list.erase(iterator position) //efficient
+list.remove(val);//all elements == val
+
+```
+## comments
+### vector vs list vs dequeue 
+vector: push_back and pop_back takes O(1), insert and erase takes O(n), access takes O(1)
+list: double linked list, not continuous, insert and erase takes O(1) anywhere, cannot access[]
+dequeue: push/pop front/back takes O(1), other == vector, space consuming
+
+access: vector
+insert/remove: list
+work on front: dequeue
+
+# Abstract Data Structure
+## Queue
 first in first out
 queue<string> q;
 q.front(), q.pop(), q.push()
 
-# Stack
-s.top(), s.pop, s.push()
+## Stack
+s.top(), s.pop(), s.push()
 
-# Iterator
+
+# Tools
+## iterator
+```c++
+auto it = vec.begin();
+while (it!=vec.end){cout << *it << endl;it++;}
+
+*it;//解引用
+iter->mem == (*iter).mem
+
 auto mid = next(window.begin(), k / 2);
 mid++;mid--
+
+for (int x: myset) std::cout << " " << x;
+for (const int& x: myset) std::cout << " " << x;
+```
+## sort
+### sort
+```c++
+sort(vec.begin(),vec.end());//默认小在前
+bool myfunc (int i, int j) {return i<j;}//bool == whether the first should go before the second
+sort(vec.begin(),vec.end()，myfunc)
+```
+### heap
+```c++
+make_heap(v.begin(), v.end(), less<int>());//这样在前面的是最大的
+make_heap(v.begin(),v.end(), greater<int>());//在前面是最小的
+//heap的话自己定义的函数和sort的用法相反 true对应的在后面 
+
+//push
+v.push_back(val);push_heap(v.begin(),v.end())
+
+//pop
+pop_heap(v.begin(),v.end());v.pop_back();
+//pop_heap()把堆顶的放到尾，然后vec.back();vec.pop_back()
+```
+make_heap再sort_heap可以实现排序
