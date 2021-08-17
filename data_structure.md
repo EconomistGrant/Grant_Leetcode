@@ -75,6 +75,12 @@ list.erase(iterator position) //efficient
 list.remove(val);//all elements == val
 
 ```
+
+## priority_queue
+```c++
+priority_queue<pair<int,int>, vector<pair<int,int>>,decltype(&cmp)> q(cmp);
+q.top();q.pop();q.emplace(first,second)
+```
 ## comments
 ### vector vs list vs dequeue 
 vector: push_back and pop_back takes O(1), insert and erase takes O(n), access takes O(1)
@@ -131,3 +137,4 @@ pop_heap(v.begin(),v.end());v.pop_back();
 //pop_heap()把堆顶的放到尾，然后vec.back();vec.pop_back()
 ```
 make_heap再sort_heap可以实现排序
+

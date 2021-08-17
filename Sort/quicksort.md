@@ -1,3 +1,6 @@
+给定一段序列：第一个值作为pivot
+目标：找到一个位置，使得pivot左边的数字都比他小，右边的数字都比他大
+实现：左右双指针往内走，停止直到左指针>pivot>右指针，交换左右指针的值
 ```c++
 void sort(vector<int> &vec);
 void quicksort(vector<int> &vec, int start, int finish);
